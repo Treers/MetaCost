@@ -66,7 +66,7 @@ class MetaCost(object):
         return model_new
 
 
-# test
+# test and example
 from sklearn.datasets import load_iris
 from sklearn.linear_model import LogisticRegression
 
