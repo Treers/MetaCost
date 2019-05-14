@@ -1,2 +1,2 @@
 # MetaCost
-This method for making an arbitrary classifier cost-sensitive by wrapping a cost-minimizing procedure around it. This procedure, called MetaCost, treats the underlying classifier as a black box, requiring no knowledge of its functioning or change to it.
+P. Domingos, "MetaCost: A General Method for Making Classifiers Cost-Sensitive", Proc. Int’l Conf. Knowledge Discovery and Data Mining, pp. 155-164, 1999.
