@@ -52,10 +52,12 @@ class MetaCost(object):
                     P_j.append(vector)
 
             # Calculate P(j|x)
-            P = np.mean(P_j, 0)
+            P = np.array(np.mean(P_j, 0)).T
 
             # Relabel
             label.append(np.argmin(self.C.dot(P)))
+
+
 
         # Model produced by applying L to S with relabeled y
         X_train = self.S[col].values
@@ -64,3 +66,19 @@ class MetaCost(object):
         model_new.fit(X_train, y_train)
 
         return model_new
+
+
+# test
+from sklearn.datasets import load_iris
+from sklearn.linear_model import LogisticRegression
+
+X = load_iris().data
+X = pd.DataFrame(X)
+y = load_iris().target
+X['target'] = y
+
+LR = LogisticRegression()
+C = np.array([[0, 1, 1], [1, 0, 1], [1, 1, 0]])
+model = MetaCost(X, LR, C, q=True).fit('target', 3)
+
+model.score(X[[0, 1, 2, 3]].values, X['target'])
