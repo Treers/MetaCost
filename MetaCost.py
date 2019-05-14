@@ -75,7 +75,7 @@ X = pd.DataFrame(X)
 y = load_iris().target
 X['target'] = y
 
-LR = LogisticRegression()
+LR = LogisticRegression(solver='lbfgs', multi_class='multinomial')
 C = np.array([[0, 1, 1], [1, 0, 1], [1, 1, 0]])
 model = MetaCost(X, LR, C, q=True).fit('target', 3)
 
