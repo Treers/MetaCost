@@ -57,8 +57,6 @@ class MetaCost(object):
             # Relabel
             label.append(np.argmin(self.C.dot(P)))
 
-
-
         # Model produced by applying L to S with relabeled y
         X_train = self.S[col].values
         y_train = np.array(label)
@@ -68,7 +66,7 @@ class MetaCost(object):
         return model_new
 
 
-# test and example
+# test
 from sklearn.datasets import load_iris
 from sklearn.linear_model import LogisticRegression
 
