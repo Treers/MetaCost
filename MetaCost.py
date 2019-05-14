@@ -5,7 +5,30 @@ from sklearn.base import clone
 
 
 class MetaCost(object):
-    def __init__(self, S, L, C, q, m=50, n=1, p=True):
+
+    """A procedure for making error-based classifiers cost-sensitive
+
+    >>> from sklearn.datasets import load_iris
+    >>> from sklearn.linear_model import LogisticRegression
+    >>> import pandas as pd
+    >>> import numpy as np
+    >>> S = pd.DataFrame(load_iris().data)
+    >>> S['target'] = load_iris().target
+    >>> LR = LogisticRegression(solver='lbfgs', multi_class='multinomial')
+    >>> C = np.array([[0, 1, 1], [1, 0, 1], [1, 1, 0]])
+    >>> model = MetaCost(S, LR, C).fit('target', 3)
+    >>> model.predict_proba(S[:2, :])
+    """
+    def __init__(self, S, L, C, m=50, n=1, p=True, q=True):
+        """
+        :param S: The training set
+        :param L: A classification learning algorithm
+        :param C: A cost matrix
+        :param q: Is True iff all resamples are to be used  for each examples
+        :param m: The number of resamples to generate
+        :param n: The number of examples in each resample
+        :param p: Is True iff L produces class probabilities
+        """
         if not isinstance(S, pd.DataFrame):
             raise ValueError('S must be a DataFrame object')
         new_index = list(range(len(S)))
@@ -19,6 +42,11 @@ class MetaCost(object):
         self.q = q
 
     def fit(self, flag, num_class):
+        """
+        :param flag: The name of classification labels
+        :param num_class: The number of classes
+        :return: Classifier
+        """
         col = [col for col in self.S.columns if col != flag]
         S_ = {}
         M = []
@@ -64,19 +92,3 @@ class MetaCost(object):
         model_new.fit(X_train, y_train)
 
         return model_new
-
-
-# test and example
-from sklearn.datasets import load_iris
-from sklearn.linear_model import LogisticRegression
-
-X = load_iris().data
-X = pd.DataFrame(X)
-y = load_iris().target
-X['target'] = y
-
-LR = LogisticRegression(solver='lbfgs', multi_class='multinomial')
-C = np.array([[0, 1, 1], [1, 0, 1], [1, 1, 0]])
-model = MetaCost(X, LR, C, q=True).fit('target', 3)
-
-model.score(X[[0, 1, 2, 3]].values, X['target'])
