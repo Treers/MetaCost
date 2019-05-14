@@ -18,6 +18,7 @@ class MetaCost(object):
     >>> C = np.array([[0, 1, 1], [1, 0, 1], [1, 1, 0]])
     >>> model = MetaCost(S, LR, C).fit('target', 3)
     >>> model.predict_proba(S[:2, :])
+    >>> model.score(S[[0, 1, 2, 3]].values, S['target'])
     """
     def __init__(self, S, L, C, m=50, n=1, p=True, q=True):
         """
