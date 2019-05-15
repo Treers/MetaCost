@@ -19,7 +19,7 @@ class MetaCost(object):
     >>> model = MetaCost(S, LR, C).fit('target', 3)
     >>> model.predict_proba(S[:2, :])
     >>> model.score(S[[0, 1, 2, 3]].values, S['target'])
-    
+
     .. note:: The form of the cost matrix C must be as follows:
     +---------------+----------+----------+----------+
     |  actual class |          |          |          |
@@ -33,7 +33,7 @@ class MetaCost(object):
     |   h(x)=j_2    |    c     |    0     |     d    |
     |   h(x)=j_3    |    e     |    f     |     0    |
     +---------------+----------+----------+----------+
-    | C = np.array([[0, a, b],[c, 0 , d],[e, f, 0]]) |
+    | C = np.array([[0, a, b],[c, 0 , d]],[e, f, 0]) |
     +------------------------------------------------+
     """
     def __init__(self, S, L, C, m=50, n=1, p=True, q=True):
@@ -80,9 +80,8 @@ class MetaCost(object):
             M.append(model.fit(X, y))
 
         label = []
+        S_array = self.S[col].values
         for i in range(len(self.S)):
-            S_array = self.S[col].values
-
             if not self.q:
                 k_th = [k for k, v in S_.items() if i not in v.index]
                 M = list(np.array(M)[k_th])
