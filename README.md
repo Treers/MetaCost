@@ -19,6 +19,20 @@ Below is an example of using MetaCost to perform imbalanced learning.
  >>> model = MetaCost(S, LR, C).fit('target', 3)
  >>> model.predict_proba(load_iris().data[[2]])
  >>> model.score(S[[0, 1, 2, 3]].values, S['target'])
+ +---------------+----------+----------+----------+
+ |  actual class |          |          |          |
+ +               |          |          |          |
+ |   +           | y(x)=j_1 | y(x)=j_2 | y(x)=j_3 |
+ |       +       |          |          |          |
+ |           +   |          |          |          |
+ |predicted class|          |          |          |
+ +---------------+----------+----------+----------+
+ |   h(x)=j_1    |    0     |    a     |     b    |
+ |   h(x)=j_2    |    c     |    0     |     d    |
+ |   h(x)=j_3    |    e     |    f     |     0    |
+ +---------------+----------+----------+----------+
+ | C = np.array([[0, a, b],[c, 0 , d],[e, f, 0]]) |
+ +------------------------------------------------+
 ```
 
 Reference
