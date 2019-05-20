@@ -17,7 +17,7 @@ class MetaCost(object):
     >>> LR = LogisticRegression(solver='lbfgs', multi_class='multinomial')
     >>> C = np.array([[0, 1, 1], [1, 0, 1], [1, 1, 0]])
     >>> model = MetaCost(S, LR, C).fit('target', 3)
-    >>> model.predict_proba(S[:2, :])
+    >>> model.predict_proba(load_iris().data[[2]])
     >>> model.score(S[[0, 1, 2, 3]].values, S['target'])
 
     .. note:: The form of the cost matrix C must be as follows:
