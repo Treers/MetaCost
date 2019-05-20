@@ -84,14 +84,16 @@ class MetaCost(object):
         for i in range(len(self.S)):
             if not self.q:
                 k_th = [k for k, v in S_.items() if i not in v.index]
-                M = list(np.array(M)[k_th])
+                M_ = list(np.array(M)[k_th])
+            else:
+                M_ = M
 
             if self.p:
-                P_j = [model.predict_proba(S_array[[i]]) for model in M]
+                P_j = [model.predict_proba(S_array[[i]]) for model in M_]
             else:
                 P_j = []
                 vector = [0] * num_class
-                for model in M:
+                for model in M_:
                     vector[model.predict(S_array[[i]])] = 1
                     P_j.append(vector)
 
